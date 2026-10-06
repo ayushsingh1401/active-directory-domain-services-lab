@@ -1,0 +1,637 @@
+1. Domain Controller
+
+The Windows Server virtual machine acts as the Domain Controller.
+
+Responsibilities include:
+
+Active Directory authentication
+User account management
+Computer account management
+DNS service
+Domain management
+Centralized access management
+2. Windows 11 Client
+
+The Windows 11 virtual machine acts as the end-user workstation.
+
+The client is used to:
+
+Connect to the domain
+Resolve the domain through DNS
+Join the Active Directory domain
+Authenticate using domain credentials
+Test domain connectivity
+Simulate common end-user support scenarios
+🛠️ Technologies and Tools
+Technology	Purpose
+Windows Server	Domain Controller
+Active Directory Domain Services	Centralized identity management
+DNS	Domain and service name resolution
+Windows 11	Domain client
+Oracle VirtualBox	Virtualization platform
+Active Directory Users and Computers	User/computer management
+Command Prompt	Network troubleshooting
+PowerShell	Windows administration
+Windows Administrative Tools	Server management
+🌐 Active Directory Domain
+
+A dedicated Active Directory domain was created for the lab.
+
+Example:
+
+ad.domain.com
+
+The domain is hosted by the Windows Server Domain Controller.
+
+The Domain Controller provides centralized authentication and directory services to domain-joined client computers.
+
+Note: The domain name above represents the lab environment and is not intended for production use.
+
+⚙️ Phase 1 — Windows Server Setup
+
+The first step was creating a Windows Server virtual machine using Oracle VirtualBox.
+
+The server was configured with appropriate:
+
+CPU resources
+RAM
+Virtual hard disk
+Network adapter
+Windows Server installation
+
+After installation, the server was prepared for Active Directory deployment.
+
+🌐 Phase 2 — Network Configuration
+
+A stable network configuration is important for Active Directory.
+
+The Domain Controller was configured with a suitable IP configuration.
+
+Example:
+
+IP Address:      192.168.x.x
+Subnet Mask:     255.255.255.0
+Default Gateway: 192.168.x.x
+Preferred DNS:   Domain Controller IP
+
+The exact addresses depend on the VirtualBox network configuration.
+
+🧩 Phase 3 — Installing Active Directory Domain Services
+
+Active Directory Domain Services was installed on the Windows Server.
+
+AD DS provides centralized management of:
+
+Users
+Computers
+Groups
+Authentication
+Domain resources
+Security policies
+
+After installing the AD DS role, the server was promoted to a Domain Controller.
+
+🏢 Phase 4 — Domain Controller Promotion
+
+The Windows Server was promoted to a Domain Controller and configured with the lab Active Directory domain.
+
+Example:
+
+ad.domain.com
+
+After the promotion process, the server became responsible for providing domain authentication and directory services.
+
+📁 Active Directory Structure
+
+The Active Directory environment contains objects such as:
+
+Active Directory Domain
+│
+├── Users
+│   ├── User 1
+│   └── User 2
+│
+├── Computers
+│   └── Windows 11 Client
+│
+└── Organizational Units
+    ├── IT
+    ├── HR
+    └── Support
+
+The structure can be expanded as required for additional users, departments, and computers.
+
+👤 Phase 5 — User Management
+
+Users were created and managed using:
+
+Active Directory Users and Computers (ADUC)
+
+User management tasks included:
+
+Creating user accounts
+Setting passwords
+Managing account status
+Enabling/disabling accounts
+Organizing users
+Testing authentication
+
+Example user:
+
+Username: ayush
+Domain:   ad.domain.com
+
+The domain user can authenticate to a domain-joined Windows client using their Active Directory credentials.
+
+💻 Phase 6 — Client Machine Setup
+
+A Windows 11 client virtual machine was created using Oracle VirtualBox.
+
+The client was configured with:
+
+Windows 11
+Network adapter
+IP configuration
+Domain Controller as DNS server
+
+The client must be able to communicate with the Domain Controller before it can successfully join the domain.
+
+🔍 Phase 7 — DNS Configuration
+
+DNS is a critical component of Active Directory.
+
+Active Directory relies heavily on DNS to locate domain services and Domain Controllers.
+
+The Windows client was configured to use the Domain Controller as its preferred DNS server.
+
+Example:
+
+Preferred DNS Server:
+
+192.168.x.x
+
+where the address represents the Domain Controller.
+
+🧪 DNS Testing
+
+DNS functionality was tested using:
+
+ipconfig /all
+
+This command was used to verify:
+
+IP address
+Subnet mask
+Default gateway
+DNS server
+
+Additional testing:
+
+nslookup ad.domain.com
+
+and:
+
+ping ad.domain.com
+
+Successful name resolution indicates that the client can resolve the Active Directory domain.
+
+🔗 Phase 8 — Joining Windows 11 Client to Domain
+
+The Windows 11 client was joined to the Active Directory domain.
+
+General process:
+
+Configure the client network
+Set the Domain Controller as preferred DNS
+Verify network connectivity
+Open Windows system properties
+Select domain membership
+Enter the Active Directory domain
+Provide authorized domain credentials
+Restart the client
+Verify domain membership
+Test domain login
+
+Example:
+
+Domain:
+
+ad.domain.com
+🔐 Phase 9 — Domain Authentication
+
+After joining the Windows client to the domain, domain credentials were used to test authentication.
+
+The login process demonstrates centralized identity management.
+
+Instead of creating separate local accounts on every computer, users can authenticate using their Active Directory accounts.
+
+Example:
+
+Username:
+
+AD\ayush
+
+or:
+
+ayush@ad.domain.com
+🖥️ Computer Account Management
+
+When a computer joins an Active Directory domain, a corresponding computer account is created in Active Directory.
+
+The computer account allows the Domain Controller to identify and manage the workstation.
+
+Example:
+
+WIN11-CLIENT$
+
+Computer accounts can be viewed and managed through:
+
+Active Directory Users and Computers
+
+📂 Organizational Units (OUs)
+
+Organizational Units can be used to logically organize Active Directory objects.
+
+Example:
+
+ad.domain.com
+│
+├── IT
+│   ├── Users
+│   └── Computers
+│
+├── HR
+│   ├── Users
+│   └── Computers
+│
+└── Support
+    ├── Users
+    └── Computers
+
+OUs are useful for:
+
+Organizing users
+Organizing computers
+Applying Group Policies
+Delegating administration
+Managing departments
+👥 Security Groups
+
+Security groups can be used to simplify permission management.
+
+Instead of assigning permissions to individual users, users can be placed into groups.
+
+Example:
+
+IT-Support
+│
+├── User 1
+├── User 2
+└── User 3
+
+Permissions can then be assigned to the group rather than each individual account.
+
+🔑 Permissions
+
+The lab environment was used to understand Windows access permissions.
+
+Important concepts include:
+
+NTFS Permissions
+
+Permissions applied to files and folders stored on NTFS volumes.
+
+Common permissions include:
+
+Full Control
+Modify
+Read & Execute
+Read
+Write
+Share Permissions
+
+Permissions applied when folders are shared over the network.
+
+Understanding both NTFS and Share permissions is important for IT Support and Windows administration.
+
+🛡️ Authentication vs Authorization
+
+A key concept studied during the project was the difference between authentication and authorization.
+
+Authentication
+
+Authentication answers:
+
+"Who are you?"
+
+Example:
+
+Username + Password
+Authorization
+
+Authorization answers:
+
+"What are you allowed to access?"
+
+Example:
+
+User belongs to IT-Support group
+        ↓
+Group has access to shared folder
+        ↓
+User can access the folder
+🌐 Important Active Directory Services
+
+The lab helped demonstrate the relationship between several Windows services.
+
+Active Directory
+       |
+       +---- AD DS
+       |
+       +---- DNS
+       |
+       +---- Authentication
+       |
+       +---- Users
+       |
+       +---- Computers
+       |
+       +---- Groups
+       |
+       +---- Policies
+🧰 Troubleshooting Methodology
+
+A structured troubleshooting methodology was followed while working with the lab.
+
+Identify the issue
+       ↓
+Gather information
+       ↓
+Check physical / virtual connectivity
+       ↓
+Check IP configuration
+       ↓
+Check DNS
+       ↓
+Check Domain Controller
+       ↓
+Test connectivity
+       ↓
+Apply corrective action
+       ↓
+Verify the solution
+       ↓
+Document the issue
+
+This approach is directly relevant to Help Desk and IT Support environments.
+
+🔧 Common Troubleshooting Scenarios
+Scenario 1 — Client Cannot Join Domain
+Possible causes
+Incorrect DNS server
+Incorrect domain name
+Client cannot reach Domain Controller
+Network adapter problem
+Domain Controller unavailable
+Incorrect credentials
+Troubleshooting
+
+First check:
+
+ipconfig /all
+
+Then test:
+
+ping <Domain-Controller-IP>
+
+Test DNS:
+
+nslookup ad.domain.com
+
+Verify that the client is using the Domain Controller as its DNS server.
+
+Scenario 2 — Domain Login Not Working
+Possible causes
+Incorrect username
+Incorrect password
+Account disabled
+Account locked
+Network connectivity issue
+Domain Controller unavailable
+Incorrect domain selected
+Troubleshooting
+
+Check:
+
+Username
+Password
+Domain
+Account status
+Network connectivity
+Domain Controller availability
+Scenario 3 — DNS Resolution Failure
+
+Commands used:
+
+ipconfig /all
+ipconfig /flushdns
+ipconfig /renew
+nslookup ad.domain.com
+ping ad.domain.com
+
+The objective is to determine whether the issue is related to:
+
+DNS configuration
+Network configuration
+Domain Controller availability
+Name resolution
+Scenario 4 — Client Has No Network Connectivity
+
+Basic troubleshooting:
+
+ipconfig
+ping 127.0.0.1
+ping <gateway>
+ping <Domain-Controller-IP>
+
+The tests help isolate whether the issue is:
+
+Local TCP/IP stack
+        ↓
+Network adapter
+        ↓
+Gateway
+        ↓
+Domain Controller
+🧪 Useful Commands
+IP Configuration
+ipconfig
+ipconfig /all
+DNS Cache
+ipconfig /flushdns
+DNS Testing
+nslookup ad.domain.com
+Connectivity
+ping <IP-address>
+Route Testing
+tracert <IP-address>
+System Information
+hostname
+whoami
+🖥️ Active Directory Administrative Tools
+
+Tools used/studied in this project include:
+
+Active Directory Users and Computers
+
+Used for:
+
+User management
+Computer management
+Group management
+OU management
+DNS Manager
+
+Used for:
+
+DNS zones
+Records
+Name resolution
+DNS troubleshooting
+Server Manager
+
+Used for:
+
+Installing server roles
+Managing Windows Server
+Managing server features
+Command Prompt
+
+Used for:
+
+Network troubleshooting
+DNS testing
+IP configuration
+Connectivity testing
+PowerShell
+
+Used for:
+
+Windows administration
+System information
+Future automation
+Active Directory administration
+📸 Project Screenshots
+Domain Controller
+
+Active Directory Users and Computers
+
+DNS Configuration
+
+Windows 11 Client
+
+Domain Joined Client
+
+Domain User Login
+
+📚 Key Concepts Learned
+
+Through this project, the following concepts were practiced:
+
+Active Directory Domain Services
+Domain Controller
+Active Directory domain
+DNS
+Domain authentication
+User accounts
+Computer accounts
+Security groups
+Organizational Units
+Domain joining
+Windows client administration
+NTFS permissions
+Share permissions
+Network troubleshooting
+DNS troubleshooting
+Windows troubleshooting
+💼 IT Support Skills Demonstrated
+
+This project demonstrates practical exposure to:
+
+Windows administration
+Active Directory administration
+User account management
+Computer account management
+Domain authentication
+DNS troubleshooting
+Network troubleshooting
+Permission management
+Client-side troubleshooting
+Systematic problem solving
+
+These skills are relevant to entry-level:
+
+IT Support
+Technical Support
+Help Desk
+Desktop Support
+Service Desk
+Windows Support
+
+roles.
+
+🚀 Future Improvements
+
+The lab can be expanded with additional enterprise features:
+
+Group Policy Objects (GPO)
+Password policies
+Account lockout policies
+Multiple Organizational Units
+Security groups
+Shared folders
+NTFS and Share permissions
+DHCP Server
+Multiple Windows clients
+Remote Desktop Services
+PowerShell automation
+Windows Event Viewer troubleshooting
+Backup and recovery
+Advanced Active Directory troubleshooting
+🎓 What This Project Demonstrates
+
+The project demonstrates the practical workflow of a basic Windows domain environment:
+
+Windows Server
+      ↓
+Install AD DS
+      ↓
+Promote Server to Domain Controller
+      ↓
+Configure DNS
+      ↓
+Create Users / Groups / Computers
+      ↓
+Configure Windows Client
+      ↓
+Configure Client DNS
+      ↓
+Join Client to Domain
+      ↓
+Authenticate Domain User
+      ↓
+Manage Access & Permissions
+      ↓
+Troubleshoot Issues
+👨‍💻 Project Purpose
+
+This project was created as a practical laboratory to develop foundational Active Directory, Windows administration, networking, and troubleshooting skills.
+
+The project focuses on understanding how centralized identity and computer management works in a Windows domain environment and how an IT Support technician can troubleshoot common user, authentication, DNS, network, and access-related problems.
+
+Author
+
+Ayush Singh
+
+BCA Graduate | Aspiring IT Support / Technical Support Professional
+
